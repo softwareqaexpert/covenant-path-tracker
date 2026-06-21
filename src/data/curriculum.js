@@ -17,6 +17,7 @@ export const lessons = [
   {
     id: 'l1', num: 1, title: 'The Message of the Restoration',
     scripture: 'Joseph Smith—History 1; Book of Mormon Introduction',
+    url: 'https://www.churchofjesuschrist.org/study/manual/preach-my-gospel-2023/04-chapter-3/08-chapter-3-lesson-1?lang=eng',
     principles: [
       { id: 'l1-p1', label: 'God Is Our Loving Heavenly Father' },
       { id: 'l1-p2', label: 'God Reveals the Gospel through Prophets' },
@@ -30,6 +31,7 @@ export const lessons = [
   {
     id: 'l2', num: 2, title: "Heavenly Father's Plan of Salvation",
     scripture: 'Alma 40–42; Moses 1',
+    url: 'https://www.churchofjesuschrist.org/study/manual/preach-my-gospel-2023/04-chapter-3/09-chapter-3-lesson-2?lang=eng',
     principles: [
       { id: 'l2-p1', label: 'Premortal Life' },
       { id: 'l2-p2', label: 'The Creation' },
@@ -44,6 +46,7 @@ export const lessons = [
   {
     id: 'l3', num: 3, title: 'The Gospel of Jesus Christ',
     scripture: '2 Nephi 31; 3 Nephi 11',
+    url: 'https://www.churchofjesuschrist.org/study/manual/preach-my-gospel-2023/04-chapter-3/10-chapter-3-lesson-3?lang=eng',
     principles: [
       { id: 'l3-p1', label: 'The Divine Mission of Jesus Christ' },
       { id: 'l3-p2', label: 'Faith in Jesus Christ' },
@@ -57,6 +60,7 @@ export const lessons = [
   {
     id: 'l4', num: 4, title: 'Becoming Lifelong Disciples of Jesus Christ',
     scripture: 'Organized around the four baptismal covenants',
+    url: 'https://www.churchofjesuschrist.org/study/manual/preach-my-gospel-2023/04-chapter-3/11-chapter-3-lesson-4?lang=eng',
     principles: [
       { id: 'l4-p1', group: 'Take upon Us the Name of Christ', label: 'Pray Often' },
       { id: 'l4-p2', group: 'Take upon Us the Name of Christ', label: 'Study the Scriptures' },

@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store.jsx'
+import { overallProgress, lessonsComplete } from '../progress'
+import { recommendQuestions } from '../data/curriculum'
 
 function Field({ label, type = 'text', value, onChange, placeholder }) {
   return (
@@ -22,6 +24,24 @@ export default function Settings() {
     }
   }
 
+  const isDone = (id) => Boolean(state.done[id])
+  const onShare = async () => {
+    const ov = overallProgress(isDone, p)
+    const lc = lessonsComplete(isDone)
+    const rr = recommendQuestions.filter((q) => state.readiness[q.id] === 'ready').length
+    const text = [
+      `My Covenant Path progress${p.name ? ' — ' + p.name : ''}`,
+      `Overall: ${ov.pct}% complete`,
+      `Lessons: ${lc} of 4 complete`,
+      `Recommend readiness: ${rr} of ${recommendQuestions.length}`,
+      p.endowmentGoal ? `Endowment goal: ${p.endowmentGoal}` : null,
+    ].filter(Boolean).join('\n')
+    try {
+      if (navigator.share) await navigator.share({ title: 'My Covenant Path', text })
+      else { await navigator.clipboard.writeText(text); window.alert('Progress copied to clipboard.') }
+    } catch { /* user cancelled */ }
+  }
+
   return (
     <div>
       <div className="topbar">
@@ -40,6 +60,9 @@ export default function Settings() {
 
       <div className="card">
         <div className="f12 hint" style={{ marginBottom: 8 }}>App</div>
+        <button className="btn" style={{ marginBottom: 8 }} onClick={onShare}>
+          <i className="ti ti-share" aria-hidden="true"></i> Share my progress
+        </button>
         <button className="btn" style={{ marginBottom: 8 }} onClick={restoreIntro}>
           <i className="ti ti-compass" aria-hidden="true"></i> Show the intro again
         </button>

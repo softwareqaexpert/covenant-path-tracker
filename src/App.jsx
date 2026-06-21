@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import BottomNav from './components/BottomNav.jsx'
+import UpdateBanner from './components/UpdateBanner.jsx'
 import Home from './screens/Home.jsx'
 import Path from './screens/Path.jsx'
 import Lessons from './screens/Lessons.jsx'
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>
+      <UpdateBanner />
       <BottomNav />
     </div>
   )

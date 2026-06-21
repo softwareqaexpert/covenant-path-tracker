@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import { overallProgress, findCurrentLesson, lessonProgress } from '../progress'
-import { checkinItems } from '../data/curriculum'
+import { checkinItems, lessons } from '../data/curriculum'
 import IntroBox from '../components/IntroBox.jsx'
+import Onboarding from '../components/Onboarding.jsx'
 
 function streakCount(checkins) {
   let n = 0
@@ -27,9 +28,15 @@ export default function Home() {
   const streak = streakCount(state.checkins)
   const greetName = prof.name ? `, ${prof.name.split(' ')[0]}` : ''
   const today = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })
+  const todayKey = new Date().toISOString().slice(0, 10)
+  const nextVisit = lessons
+    .map((l) => ({ l, s: state.schedules[l.id] }))
+    .filter((x) => x.s && x.s.date && x.s.date >= todayKey)
+    .sort((a, b) => a.s.date.localeCompare(b.s.date))[0] || null
 
   return (
     <div>
+      <Onboarding />
       <div className="between" style={{ padding: '2px 2px 14px' }}>
         <div>
           <div className="f12 hint">{today}</div>
@@ -64,6 +71,22 @@ export default function Home() {
         </div>
         <div className="f11 hint mt8">{lp.done} of {lp.total} principles</div>
       </Link>
+
+      {nextVisit && (
+        <Link to={`/lessons/${nextVisit.l.id}`} className="card tint-blue" style={{ display: 'block' }}>
+          <div className="row">
+            <i className="ti ti-calendar-event ic-blue" style={{ fontSize: 20 }} aria-hidden="true"></i>
+            <div style={{ flex: 1 }}>
+              <div className="f11" style={{ color: 'var(--blueD)' }}>Next visit</div>
+              <div className="f13 b" style={{ color: 'var(--blueDD)' }}>{nextVisit.l.title}</div>
+              <div className="f11" style={{ color: 'var(--blueD)' }}>
+                {new Date(nextVisit.s.date + 'T00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+                {nextVisit.s.teacher ? ` · ${nextVisit.s.teacher}` : ''}
+              </div>
+            </div>
+          </div>
+        </Link>
+      )}
 
       <div className="card">
         <div className="f11 hint" style={{ marginBottom: 6 }}>Today</div>

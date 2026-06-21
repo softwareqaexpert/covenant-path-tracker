@@ -7,7 +7,7 @@ import { lessonProgress, lessonsComplete } from '../progress'
 export default function LessonDetail() {
   const { id } = useParams()
   const nav = useNavigate()
-  const { isDone, toggleDone, doneDate } = useStore()
+  const { isDone, toggleDone, doneDate, state, setSchedule } = useStore()
   const lesson = lessons.find((l) => l.id === id) || lessons[0]
   const lp = lessonProgress(lesson, isDone)
   const [celebrate, setCelebrate] = useState(false)
@@ -23,6 +23,8 @@ export default function LessonDetail() {
   const totalDoneLessons = lessonsComplete(isDone)
   const idx = lessons.findIndex((l) => l.id === lesson.id)
   const nextLesson = lessons[idx + 1]
+  const sched = state.schedules[lesson.id] || {}
+  const teacherNames = state.contacts.filter((c) => c.name).map((c) => c.name)
   let lastGroup = null
 
   return (
@@ -38,6 +40,33 @@ export default function LessonDetail() {
       <div className="card" style={{ padding: '10px 14px' }}>
         <div className="f11" style={{ color: 'var(--blueD)' }}>Read together</div>
         <div className="f13">{lesson.scripture}</div>
+        <a href={lesson.url} target="_blank" rel="noreferrer" className="f12"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--blueD)', marginTop: 6 }}>
+          <i className="ti ti-book-2" aria-hidden="true"></i> Read in Gospel Library
+          <i className="ti ti-external-link" aria-hidden="true"></i>
+        </a>
+      </div>
+
+      <div className="card">
+        <div className="f12 b" style={{ marginBottom: 8 }}>Schedule a visit</div>
+        <div className="field">
+          <label>Date</label>
+          <input type="date" value={sched.date || ''} onChange={(e) => setSchedule(lesson.id, { date: e.target.value })} />
+        </div>
+        <div className="field">
+          <label>Who's teaching</label>
+          <input list="teacher-list" value={sched.teacher || ''} placeholder="Minister or missionary"
+            onChange={(e) => setSchedule(lesson.id, { teacher: e.target.value })} />
+          <datalist id="teacher-list">
+            {teacherNames.map((n) => <option key={n} value={n} />)}
+          </datalist>
+        </div>
+        {sched.date && (
+          <div className="f12" style={{ color: 'var(--blueD)' }}>
+            <i className="ti ti-calendar-event" aria-hidden="true"></i> Next visit · {new Date(sched.date + 'T00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+            {sched.teacher ? ` · ${sched.teacher}` : ''}
+          </div>
+        )}
       </div>
 
       <div className="between" style={{ margin: '6px 2px' }}>

@@ -10,7 +10,8 @@ const initialState = {
   readiness: {},     // questionId -> 'ready' | 'working'
   contacts: defaultContacts,
   journal: [],       // { id, date, text }
-  prefs: { introDismissed: false },
+  schedules: {},     // lessonId -> { date, teacher }
+  prefs: { introDismissed: false, onboarded: false },
 }
 
 function load() {
@@ -23,6 +24,7 @@ function load() {
       ...saved,
       profile: { ...initialState.profile, ...(saved.profile || {}) },
       prefs: { ...initialState.prefs, ...(saved.prefs || {}) },
+      schedules: { ...(saved.schedules || {}) },
     }
   } catch {
     return initialState
@@ -74,6 +76,12 @@ export function StoreProvider({ children }) {
 
   const dismissIntro = () => setState((s) => ({ ...s, prefs: { ...s.prefs, introDismissed: true } }))
   const restoreIntro = () => setState((s) => ({ ...s, prefs: { ...s.prefs, introDismissed: false } }))
+  const setOnboarded = () => setState((s) => ({ ...s, prefs: { ...s.prefs, onboarded: true } }))
+
+  const setSchedule = (lessonId, patch) => setState((s) => ({
+    ...s,
+    schedules: { ...s.schedules, [lessonId]: { ...(s.schedules[lessonId] || {}), ...patch } },
+  }))
 
   const addJournal = (text) => setState((s) => ({
     ...s,
@@ -85,17 +93,14 @@ export function StoreProvider({ children }) {
   }))
 
   const resetProgress = () => setState((s) => ({
-    ...s,
-    done: {},
-    checkins: {},
-    readiness: {},
-    journal: [],
+    ...s, done: {}, checkins: {}, readiness: {}, journal: [], schedules: {},
   }))
 
   const value = {
     state, isDone, toggleDone, doneDate, setProfile,
     updateContact, toggleCheckin, isChecked, today, setReadiness,
-    dismissIntro, restoreIntro, addJournal, deleteJournal, resetProgress,
+    dismissIntro, restoreIntro, setOnboarded, setSchedule,
+    addJournal, deleteJournal, resetProgress,
   }
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }
