@@ -9,6 +9,9 @@ import FamilyName from './screens/FamilyName.jsx'
 import TemplePrep from './screens/TemplePrep.jsx'
 import RecommendReadiness from './screens/RecommendReadiness.jsx'
 import CheckIn from './screens/CheckIn.jsx'
+import Settings from './screens/Settings.jsx'
+import Activities from './screens/Activities.jsx'
+import Journal from './screens/Journal.jsx'
 
 export default function App() {
   return (
@@ -24,6 +27,9 @@ export default function App() {
           <Route path="/temple" element={<TemplePrep />} />
           <Route path="/recommend" element={<RecommendReadiness />} />
           <Route path="/checkin" element={<CheckIn />} />
+          <Route path="/activities" element={<Activities />} />
+          <Route path="/journal" element={<Journal />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>
       <BottomNav />

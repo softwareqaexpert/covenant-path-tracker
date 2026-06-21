@@ -185,3 +185,20 @@ export const defaultContacts = [
   { id: 'c4', name: '', role: 'Full-time missionaries', phone: '', email: '' },
   { id: 'c5', name: '', role: 'Bishop / Branch President', phone: '', email: '' },
 ]
+
+export const covenantPathIntro =
+  'The covenant path is the series of sacred covenants — beginning at baptism and ' +
+  'continuing in the temple — that lead us back to God. This app helps you track each ' +
+  'step, stay close to people who support you, and prepare to enter the House of the Lord.'
+
+// All are canonical /study/ URLs, so they open in the Gospel Library app when installed.
+export const introLinks = [
+  { id: 'lnk-christofferson', label: 'Why the Covenant Path (Elder Christofferson)',
+    url: 'https://www.churchofjesuschrist.org/study/general-conference/2021/04/54christofferson?lang=eng' },
+  { id: 'lnk-nelson', label: 'The Everlasting Covenant (President Nelson)',
+    url: 'https://www.churchofjesuschrist.org/study/liahona/2022/10/04-the-everlasting-covenant?lang=eng' },
+  { id: 'lnk-topic', label: 'Covenants and Ordinances (Gospel Topics)',
+    url: 'https://www.churchofjesuschrist.org/study/manual/gospel-topics/covenant-study-guide?lang=eng' },
+  { id: 'lnk-mcp', label: 'My Covenant Path (new-member guide)',
+    url: 'https://www.churchofjesuschrist.org/study/manual/my-covenant-path/my-covenant-path?lang=eng' },
+]

@@ -9,13 +9,21 @@ const initialState = {
   checkins: {},      // 'YYYY-MM-DD' -> { itemId: true }
   readiness: {},     // questionId -> 'ready' | 'working'
   contacts: defaultContacts,
+  journal: [],       // { id, date, text }
+  prefs: { introDismissed: false },
 }
 
 function load() {
   try {
     const raw = localStorage.getItem(KEY)
     if (!raw) return initialState
-    return { ...initialState, ...JSON.parse(raw) }
+    const saved = JSON.parse(raw)
+    return {
+      ...initialState,
+      ...saved,
+      profile: { ...initialState.profile, ...(saved.profile || {}) },
+      prefs: { ...initialState.prefs, ...(saved.prefs || {}) },
+    }
   } catch {
     return initialState
   }
@@ -64,9 +72,30 @@ export function StoreProvider({ children }) {
     readiness: { ...s.readiness, [qId]: s.readiness[qId] === value ? undefined : value },
   }))
 
+  const dismissIntro = () => setState((s) => ({ ...s, prefs: { ...s.prefs, introDismissed: true } }))
+  const restoreIntro = () => setState((s) => ({ ...s, prefs: { ...s.prefs, introDismissed: false } }))
+
+  const addJournal = (text) => setState((s) => ({
+    ...s,
+    journal: [{ id: Date.now().toString(), date: new Date().toISOString(), text }, ...s.journal],
+  }))
+  const deleteJournal = (id) => setState((s) => ({
+    ...s,
+    journal: s.journal.filter((e) => e.id !== id),
+  }))
+
+  const resetProgress = () => setState((s) => ({
+    ...s,
+    done: {},
+    checkins: {},
+    readiness: {},
+    journal: [],
+  }))
+
   const value = {
     state, isDone, toggleDone, doneDate, setProfile,
     updateContact, toggleCheckin, isChecked, today, setReadiness,
+    dismissIntro, restoreIntro, addJournal, deleteJournal, resetProgress,
   }
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }

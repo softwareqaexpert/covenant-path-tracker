@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import { overallProgress, findCurrentLesson, lessonProgress } from '../progress'
 import { checkinItems } from '../data/curriculum'
+import IntroBox from '../components/IntroBox.jsx'
 
 function streakCount(checkins) {
   let n = 0
@@ -34,17 +35,24 @@ export default function Home() {
           <div className="f12 hint">{today}</div>
           <div style={{ fontSize: 20, fontWeight: 600 }}>Hi{greetName}</div>
         </div>
-        <span className="pill amber"><i className="ti ti-flame" aria-hidden="true"></i> {streak}</span>
+        <div className="row" style={{ gap: 10 }}>
+          <span className="pill amber"><i className="ti ti-flame" aria-hidden="true"></i> {streak}</span>
+          <Link to="/settings" aria-label="Settings" style={{ color: 'var(--t2)' }}>
+            <i className="ti ti-settings" style={{ fontSize: 22 }} aria-hidden="true"></i>
+          </Link>
+        </div>
       </div>
 
-      <div className="card tint-blue">
+      <IntroBox />
+
+      <Link to="/settings" className="card tint-blue" style={{ display: 'block' }}>
         <div className="f12" style={{ color: 'var(--blueD)' }}>Goal · temple endowment</div>
         <div className="b" style={{ fontSize: 18, color: 'var(--blueDD)', margin: '2px 0 10px' }}>
           {prof.endowmentGoal ? `By ${prof.endowmentGoal}` : 'Set your goal date'}
         </div>
         <div className="bar"><span style={{ width: `${overall.pct}%` }} /></div>
         <div className="f11" style={{ color: 'var(--blueD)', marginTop: 6 }}>{overall.pct}% of your path complete</div>
-      </div>
+      </Link>
 
       <Link to={`/lessons/${current.id}`} className="card" style={{ display: 'block' }}>
         <div className="f11 hint">Continue lesson</div>
@@ -70,6 +78,12 @@ export default function Home() {
         <Link to="/checkin" className="f12" style={{ color: 'var(--blueD)', display: 'inline-block', marginTop: 6 }}>
           All check-ins <i className="ti ti-chevron-right" aria-hidden="true"></i>
         </Link>
+      </div>
+
+      <div className="card">
+        <Link to="/activities" className="between li flat"><span className="f13"><i className="ti ti-checklist" aria-hidden="true"></i> Activities & growth</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
+        <Link to="/journal" className="between li flat"><span className="f13"><i className="ti ti-notebook" aria-hidden="true"></i> Journal</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
+        <Link to="/settings" className="between li flat"><span className="f13"><i className="ti ti-settings" aria-hidden="true"></i> Settings</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
       </div>
     </div>
   )
