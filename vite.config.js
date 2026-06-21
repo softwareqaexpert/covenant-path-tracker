@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: '/covenant-path-tracker/',
   plugins: [
     react(),
     VitePWA({
@@ -15,7 +16,8 @@ export default defineConfig({
         theme_color: '#1F3864',
         background_color: '#faf9f5',
         display: 'standalone',
-        start_url: '/',
+        scope: '/covenant-path-tracker/',
+        start_url: '/covenant-path-tracker/',
         icons: [
           { src: 'icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any maskable' }
         ]

@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import '@tabler/icons-webfont/dist/tabler-icons.min.css'
 import './index.css'
 import App from './App.jsx'
@@ -9,9 +9,9 @@ import { StoreProvider } from './store.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <StoreProvider>
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </StoreProvider>
   </StrictMode>,
 )
