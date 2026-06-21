@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/covenant-path-tracker/sw.js', { scope: '/covenant-path-tracker/' })})}
