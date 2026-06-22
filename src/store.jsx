@@ -4,14 +4,15 @@ import { defaultContacts } from './data/curriculum'
 const KEY = 'covenant-path-v1'
 
 const initialState = {
-  profile: { name: '', ward: '', baptismDate: '', confirmationDate: '', endowmentGoal: '' },
+  profile: { name: '', ward: '', baptismDate: '', confirmationDate: '', endowmentGoal: '', recommendExpires: '' },
   done: {},          // id -> ISO date string
   checkins: {},      // 'YYYY-MM-DD' -> { itemId: true }
   readiness: {},     // questionId -> 'ready' | 'working'
   contacts: defaultContacts,
   journal: [],       // { id, date, text }
   schedules: {},     // lessonId -> { date, teacher }
-  prefs: { introDismissed: false, onboarded: false },
+  questions: [],     // { id, date, text, answered }
+  prefs: { introDismissed: false, onboarded: false, remindersEnabled: false, reminderTime: '08:00' },
 }
 
 function load() {
@@ -25,6 +26,7 @@ function load() {
       profile: { ...initialState.profile, ...(saved.profile || {}) },
       prefs: { ...initialState.prefs, ...(saved.prefs || {}) },
       schedules: { ...(saved.schedules || {}) },
+      questions: saved.questions || [],
     }
   } catch {
     return initialState
@@ -50,7 +52,6 @@ export function StoreProvider({ children }) {
   })
 
   const doneDate = (id) => state.done[id] || null
-
   const setProfile = (patch) => setState((s) => ({ ...s, profile: { ...s.profile, ...patch } }))
 
   const updateContact = (id, patch) => setState((s) => ({
@@ -77,6 +78,7 @@ export function StoreProvider({ children }) {
   const dismissIntro = () => setState((s) => ({ ...s, prefs: { ...s.prefs, introDismissed: true } }))
   const restoreIntro = () => setState((s) => ({ ...s, prefs: { ...s.prefs, introDismissed: false } }))
   const setOnboarded = () => setState((s) => ({ ...s, prefs: { ...s.prefs, onboarded: true } }))
+  const setPref = (patch) => setState((s) => ({ ...s, prefs: { ...s.prefs, ...patch } }))
 
   const setSchedule = (lessonId, patch) => setState((s) => ({
     ...s,
@@ -87,20 +89,34 @@ export function StoreProvider({ children }) {
     ...s,
     journal: [{ id: Date.now().toString(), date: new Date().toISOString(), text }, ...s.journal],
   }))
-  const deleteJournal = (id) => setState((s) => ({
+  const deleteJournal = (id) => setState((s) => ({ ...s, journal: s.journal.filter((e) => e.id !== id) }))
+
+  const addQuestion = (text) => setState((s) => ({
     ...s,
-    journal: s.journal.filter((e) => e.id !== id),
+    questions: [{ id: Date.now().toString(), date: new Date().toISOString(), text, answered: false }, ...s.questions],
   }))
+  const toggleQuestionAnswered = (id) => setState((s) => ({
+    ...s,
+    questions: s.questions.map((q) => (q.id === id ? { ...q, answered: !q.answered } : q)),
+  }))
+  const deleteQuestion = (id) => setState((s) => ({ ...s, questions: s.questions.filter((q) => q.id !== id) }))
 
   const resetProgress = () => setState((s) => ({
-    ...s, done: {}, checkins: {}, readiness: {}, journal: [], schedules: {},
+    ...s, done: {}, checkins: {}, readiness: {}, journal: [], schedules: {}, questions: [],
+  }))
+
+  const replaceState = (next) => setState(() => ({
+    ...initialState, ...next,
+    profile: { ...initialState.profile, ...(next.profile || {}) },
+    prefs: { ...initialState.prefs, ...(next.prefs || {}) },
   }))
 
   const value = {
-    state, isDone, toggleDone, doneDate, setProfile,
-    updateContact, toggleCheckin, isChecked, today, setReadiness,
-    dismissIntro, restoreIntro, setOnboarded, setSchedule,
-    addJournal, deleteJournal, resetProgress,
+    state, isDone, toggleDone, doneDate, setProfile, updateContact,
+    toggleCheckin, isChecked, today, setReadiness,
+    dismissIntro, restoreIntro, setOnboarded, setPref, setSchedule,
+    addJournal, deleteJournal, addQuestion, toggleQuestionAnswered, deleteQuestion,
+    resetProgress, replaceState,
   }
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }

@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import BottomNav from './components/BottomNav.jsx'
 import UpdateBanner from './components/UpdateBanner.jsx'
+import Reminders from './components/Reminders.jsx'
 import Home from './screens/Home.jsx'
 import Path from './screens/Path.jsx'
 import Lessons from './screens/Lessons.jsx'
@@ -13,6 +14,10 @@ import CheckIn from './screens/CheckIn.jsx'
 import Settings from './screens/Settings.jsx'
 import Activities from './screens/Activities.jsx'
 import Journal from './screens/Journal.jsx'
+import Glossary from './screens/Glossary.jsx'
+import Church from './screens/Church.jsx'
+import Learn from './screens/Learn.jsx'
+import Questions from './screens/Questions.jsx'
 
 export default function App() {
   return (
@@ -30,9 +35,14 @@ export default function App() {
           <Route path="/checkin" element={<CheckIn />} />
           <Route path="/activities" element={<Activities />} />
           <Route path="/journal" element={<Journal />} />
+          <Route path="/questions" element={<Questions />} />
+          <Route path="/glossary" element={<Glossary />} />
+          <Route path="/church" element={<Church />} />
+          <Route path="/learn" element={<Learn />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>
+      <Reminders />
       <UpdateBanner />
       <BottomNav />
     </div>

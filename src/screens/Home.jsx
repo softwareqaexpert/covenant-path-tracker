@@ -33,6 +33,10 @@ export default function Home() {
     .map((l) => ({ l, s: state.schedules[l.id] }))
     .filter((x) => x.s && x.s.date && x.s.date >= todayKey)
     .sort((a, b) => a.s.date.localeCompare(b.s.date))[0] || null
+  const recDays = prof.recommendExpires
+    ? Math.ceil((new Date(prof.recommendExpires + 'T00:00') - new Date()) / 86400000)
+    : null
+  const recWarn = recDays !== null && recDays <= 60
 
   return (
     <div>
@@ -60,6 +64,16 @@ export default function Home() {
         <div className="bar"><span style={{ width: `${overall.pct}%` }} /></div>
         <div className="f11" style={{ color: 'var(--blueD)', marginTop: 6 }}>{overall.pct}% of your path complete</div>
       </Link>
+
+      {recWarn && (
+        <Link to="/settings" className="card tint-amber" style={{ display: 'block' }}>
+          <div className="f13 b" style={{ color: 'var(--amberD)' }}>
+            <i className="ti ti-alert-triangle" aria-hidden="true"></i>{' '}
+            {recDays < 0 ? 'Your temple recommend has expired' : `Temple recommend expires in ${recDays} day${recDays === 1 ? '' : 's'}`}
+          </div>
+          <div className="f11" style={{ color: 'var(--amberD)', marginTop: 2 }}>Renew it with your bishop and stake president.</div>
+        </Link>
+      )}
 
       <Link to={`/lessons/${current.id}`} className="card" style={{ display: 'block' }}>
         <div className="f11 hint">Continue lesson</div>
@@ -104,8 +118,17 @@ export default function Home() {
       </div>
 
       <div className="card">
+        <div className="f11 hint" style={{ marginBottom: 2 }}>Learn</div>
+        <Link to="/church" className="between li flat"><span className="f13"><i className="ti ti-building-church" aria-hidden="true"></i> Your first Sundays</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
+        <Link to="/glossary" className="between li flat"><span className="f13"><i className="ti ti-book" aria-hidden="true"></i> Glossary</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
+        <Link to="/learn" className="between li flat"><span className="f13"><i className="ti ti-award" aria-hidden="true"></i> Ordinances & blessings</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
+      </div>
+
+      <div className="card">
+        <div className="f11 hint" style={{ marginBottom: 2 }}>Tools</div>
         <Link to="/activities" className="between li flat"><span className="f13"><i className="ti ti-checklist" aria-hidden="true"></i> Activities & growth</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
         <Link to="/journal" className="between li flat"><span className="f13"><i className="ti ti-notebook" aria-hidden="true"></i> Journal</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
+        <Link to="/questions" className="between li flat"><span className="f13"><i className="ti ti-help-circle" aria-hidden="true"></i> Questions for leaders</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
         <Link to="/settings" className="between li flat"><span className="f13"><i className="ti ti-settings" aria-hidden="true"></i> Settings</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
       </div>
     </div>
