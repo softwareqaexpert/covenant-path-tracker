@@ -139,15 +139,19 @@ export const recommendQuestions = [
   { id: 'rq15', label: 'Consider yourself worthy to enter the temple' },
 ]
 
+// Daily habits — toggled each day.
 export const checkinItems = [
   { id: 'ci-prayer', label: 'Morning prayer' },
   { id: 'ci-scripture', label: 'Scripture study' },
-  { id: 'ci-sacrament', label: 'Attend sacrament meeting' },
-  { id: 'ci-wow', label: 'Keep the Word of Wisdom' },
-  { id: 'ci-tithing', label: 'Pay tithing' },
-  { id: 'ci-chastity', label: 'Live the law of chastity' },
   { id: 'ci-serve', label: 'Serve / minister to someone' },
-  { id: 'ci-fast', label: 'Fast & fast offering (monthly)' },
+]
+// Weekly — done once per week.
+export const weeklyItems = [
+  { id: 'ci-sacrament', label: 'Attend sacrament meeting & partake' },
+]
+// Monthly — done once per month.
+export const monthlyItems = [
+  { id: 'ci-fast', label: 'Fast & give a fast offering' },
 ]
 
 export const familySteps = [
