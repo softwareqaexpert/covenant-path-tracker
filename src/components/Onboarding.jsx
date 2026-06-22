@@ -21,8 +21,11 @@ export default function Onboarding() {
             <i className="ti ti-compass ic-blue" style={{ fontSize: 40 }} aria-hidden="true"></i>
           </div>
           <div className="b" style={{ fontSize: 18 }}>Welcome to your covenant path</div>
-          <div className="f12 muted" style={{ margin: '4px 0 14px' }}>
+          <div className="f12 muted" style={{ margin: '4px 0 10px' }}>
             A couple of quick things to personalize your journey. You can change these later in Settings.
+          </div>
+          <div className="f12" style={{ color: 'var(--blueD)', fontStyle: 'italic', margin: '0 0 14px' }}>
+            This is a road of discipleship, not a checklist for earning heaven — just steps to come closer to Christ.
           </div>
         </div>
         <div className="field">

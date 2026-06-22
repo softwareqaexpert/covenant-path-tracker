@@ -12,6 +12,7 @@ const initialState = {
   journal: [],       // { id, date, text }
   schedules: {},     // lessonId -> { date, teacher }
   questions: [],     // { id, date, text, answered }
+  reading: {},       // bookId -> true
   prefs: { introDismissed: false, onboarded: false, remindersEnabled: false, reminderTime: '08:00' },
 }
 
@@ -27,6 +28,7 @@ function load() {
       prefs: { ...initialState.prefs, ...(saved.prefs || {}) },
       schedules: { ...(saved.schedules || {}) },
       questions: saved.questions || [],
+      reading: { ...(saved.reading || {}) },
     }
   } catch {
     return initialState
@@ -101,8 +103,15 @@ export function StoreProvider({ children }) {
   }))
   const deleteQuestion = (id) => setState((s) => ({ ...s, questions: s.questions.filter((q) => q.id !== id) }))
 
+  const toggleReading = (bookId) => setState((s) => {
+    const reading = { ...s.reading }
+    if (reading[bookId]) delete reading[bookId]
+    else reading[bookId] = true
+    return { ...s, reading }
+  })
+
   const resetProgress = () => setState((s) => ({
-    ...s, done: {}, checkins: {}, readiness: {}, journal: [], schedules: {}, questions: [],
+    ...s, done: {}, checkins: {}, readiness: {}, journal: [], schedules: {}, questions: [], reading: {},
   }))
 
   const replaceState = (next) => setState(() => ({
@@ -116,7 +125,7 @@ export function StoreProvider({ children }) {
     toggleCheckin, isChecked, today, setReadiness,
     dismissIntro, restoreIntro, setOnboarded, setPref, setSchedule,
     addJournal, deleteJournal, addQuestion, toggleQuestionAnswered, deleteQuestion,
-    resetProgress, replaceState,
+    toggleReading, resetProgress, replaceState,
   }
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }

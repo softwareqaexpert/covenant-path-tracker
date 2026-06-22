@@ -1,5 +1,6 @@
 import { useStore } from '../store.jsx'
 import { covenantPathIntro, introLinks } from '../data/curriculum'
+import { framingShort } from '../data/content'
 
 export default function IntroBox() {
   const { state, dismissIntro } = useStore()
@@ -15,7 +16,8 @@ export default function IntroBox() {
       <div className="f13 b" style={{ color: 'var(--blueDD)', marginBottom: 4 }}>
         <i className="ti ti-compass" aria-hidden="true"></i> Start here
       </div>
-      <div className="f13" style={{ color: 'var(--blueDD)', marginBottom: 10 }}>{covenantPathIntro}</div>
+      <div className="f13" style={{ color: 'var(--blueDD)', marginBottom: 8 }}>{covenantPathIntro}</div>
+      <div className="f12" style={{ color: 'var(--blueD)', fontStyle: 'italic', marginBottom: 10 }}>{framingShort}</div>
       <div className="f11 b" style={{ color: 'var(--blueD)', marginBottom: 6 }}>Learn more</div>
       {introLinks.map((l) => (
         <a key={l.id} href={l.url} target="_blank" rel="noreferrer"

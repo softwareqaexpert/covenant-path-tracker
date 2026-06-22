@@ -18,6 +18,8 @@ import Glossary from './screens/Glossary.jsx'
 import Church from './screens/Church.jsx'
 import Learn from './screens/Learn.jsx'
 import Questions from './screens/Questions.jsx'
+import Covenants from './screens/Covenants.jsx'
+import Reading from './screens/Reading.jsx'
 
 export default function App() {
   return (
@@ -39,6 +41,8 @@ export default function App() {
           <Route path="/glossary" element={<Glossary />} />
           <Route path="/church" element={<Church />} />
           <Route path="/learn" element={<Learn />} />
+          <Route path="/covenants" element={<Covenants />} />
+          <Route path="/reading" element={<Reading />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>

@@ -4,6 +4,7 @@ import { overallProgress, findCurrentLesson, lessonProgress } from '../progress'
 import { lessons } from '../data/curriculum'
 import IntroBox from '../components/IntroBox.jsx'
 import Onboarding from '../components/Onboarding.jsx'
+import DailyThought from '../components/DailyThought.jsx'
 
 function streakCount(checkins) {
   let n = 0
@@ -65,6 +66,8 @@ export default function Home() {
         <div className="f11" style={{ color: 'var(--blueD)', marginTop: 6 }}>{overall.pct}% of your path complete</div>
       </Link>
 
+      <DailyThought />
+
       {recWarn && (
         <Link to="/settings" className="card tint-amber" style={{ display: 'block' }}>
           <div className="f13 b" style={{ color: 'var(--amberD)' }}>
@@ -104,6 +107,7 @@ export default function Home() {
 
       <div className="card">
         <div className="f11 hint" style={{ marginBottom: 2 }}>Learn</div>
+        <Link to="/covenants" className="between li flat"><span className="f13"><i className="ti ti-heart-handshake" aria-hidden="true"></i> My covenants</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
         <Link to="/church" className="between li flat"><span className="f13"><i className="ti ti-building-church" aria-hidden="true"></i> Your first Sundays</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
         <Link to="/glossary" className="between li flat"><span className="f13"><i className="ti ti-book" aria-hidden="true"></i> Glossary</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
         <Link to="/learn" className="between li flat"><span className="f13"><i className="ti ti-award" aria-hidden="true"></i> Ordinances & blessings</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
@@ -112,6 +116,7 @@ export default function Home() {
       <div className="card">
         <div className="f11 hint" style={{ marginBottom: 2 }}>Tools</div>
         <Link to="/activities" className="between li flat"><span className="f13"><i className="ti ti-checklist" aria-hidden="true"></i> Activities & growth</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
+        <Link to="/reading" className="between li flat"><span className="f13"><i className="ti ti-book-2" aria-hidden="true"></i> Book of Mormon reading</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
         <Link to="/journal" className="between li flat"><span className="f13"><i className="ti ti-notebook" aria-hidden="true"></i> Journal</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
         <Link to="/questions" className="between li flat"><span className="f13"><i className="ti ti-help-circle" aria-hidden="true"></i> Questions for leaders</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
         <Link to="/settings" className="between li flat"><span className="f13"><i className="ti ti-settings" aria-hidden="true"></i> Settings</span><i className="ti ti-chevron-right ic-gray" aria-hidden="true"></i></Link>
