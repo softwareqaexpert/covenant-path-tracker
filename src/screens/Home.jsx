@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useStore } from '../store.jsx'
 import { overallProgress, findCurrentLesson, lessonProgress } from '../progress'
-import { checkinItems, lessons } from '../data/curriculum'
+import { lessons } from '../data/curriculum'
 import IntroBox from '../components/IntroBox.jsx'
 import Onboarding from '../components/Onboarding.jsx'
 
@@ -20,7 +20,7 @@ function streakCount(checkins) {
 }
 
 export default function Home() {
-  const { state, isDone, toggleCheckin, isChecked } = useStore()
+  const { state, isDone } = useStore()
   const prof = state.profile
   const overall = overallProgress(isDone, prof)
   const current = findCurrentLesson(isDone)
@@ -101,21 +101,6 @@ export default function Home() {
           </div>
         </Link>
       )}
-
-      <div className="card">
-        <div className="f11 hint" style={{ marginBottom: 6 }}>Today</div>
-        {checkinItems.slice(0, 3).map((it) => (
-          <div key={it.id} className="between li flat" onClick={() => toggleCheckin(it.id)}
-            style={{ cursor: 'pointer' }}>
-            <span className="f13">{it.label}</span>
-            <i className={`ti ${isChecked(it.id) ? 'ti-circle-check ic-teal' : 'ti-circle ic-gray'}`}
-              style={{ fontSize: 20 }} aria-hidden="true"></i>
-          </div>
-        ))}
-        <Link to="/checkin" className="f12" style={{ color: 'var(--blueD)', display: 'inline-block', marginTop: 6 }}>
-          All check-ins <i className="ti ti-chevron-right" aria-hidden="true"></i>
-        </Link>
-      </div>
 
       <div className="card">
         <div className="f11 hint" style={{ marginBottom: 2 }}>Learn</div>
